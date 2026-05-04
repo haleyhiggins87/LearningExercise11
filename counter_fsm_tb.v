@@ -60,3 +60,4 @@ module test;
   end
   
 endmodule
+closes #1
