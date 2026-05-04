@@ -25,13 +25,21 @@ module test;
    wire [7:0] ones_cnt;
    wire ones_pulse;
    wire [7:0] tens_cnt;
-   wire tens_pulse;
+   wire tens_pulse; 
+  reg [7:0] ones_extra;
+
+  always @(*) begin
+    if (tens_cnt == 8'd5)
+      ones_extra = 8'd4;
+    else 
+      ones_extra = 8'd9;
+  end
   // Instantiate design under test
   state_cntr U1(
-  .en(1'b1), .clk(clk), .reset(reset), .terminal(8'd9), .cnt(ones_cnt), .pulse(ones_pulse));
+    .en(1'b1), .clk(clk), .reset(reset), .terminal(ones_extra), .cnt(ones_cnt), .pulse(ones_pulse));
   
   state_cntr U2(
-      .en(ones_pulse), .clk(clk), .reset(reset), .terminal(8'd3), .cnt(tens_cnt), .pulse(tens_pulse) );  
+    .en(ones_pulse), .clk(clk), .reset(reset), .terminal(8'd5), .cnt(tens_cnt), .pulse(tens_pulse) );  
     initial begin
     clk = 0;
     reset = 0;
